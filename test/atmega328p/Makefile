@@ -25,23 +25,23 @@ out:
 	mkdir -p out
 
 out/atmega328p.o : ../../lib/atmega328p.rob ${DEPENDS}
-	${ROBCMP} -a atmega328p ${OPT} -o $@ $<
+	${ROBCMP} -a avr328p ${OPT} -o $@ $<
 
 out/atmega328p.ll : ../../lib/atmega328p.rob ${DEPENDS}
-	${ROBCMP} -a atmega328p ${OPT} $< > $@
+	${ROBCMP} -a avr328p ${OPT} $< > $@
 
 .SECONDARY:
 out/%.o : %.rob out/atmega328p.o ${DEPENDS}
-	${ROBCMP} -bdep -a atmega328p ${OPT} ${INCLUDES} -o $@ $<
+	${ROBCMP} -bdep -a avr328p ${OPT} ${INCLUDES} -o $@ $<
 
 out/%.ll : %.rob ${DEPENDS}
-	${ROBCMP} -bdep -a atmega328p ${OPT} ${INCLUDES} $< > $@
+	${ROBCMP} -bdep -a avr328p ${OPT} ${INCLUDES} $< > $@
 
 %.tt : %.rob ${DEPENDS}
 	@-./runtest.sh $< $(patsubst %.rob,out/%,$<) 
 
 out/% : out/%.o ${LINK_DEPENDS} 
-	ld.lld ${LD_FLAGS} $^ -o $@
+	ld.lld-18 ${LD_FLAGS} $^ -o $@
 
 test: ${ALL_TT}
 
