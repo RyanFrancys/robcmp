@@ -1,0 +1,102 @@
+
+use math.fconsts;
+
+float ln(float x)
+/******************************************************************************/
+/*
+  Purpose:
+
+    LN_CORDIC evaluates the natural logarithm using the CORDIC method.
+
+  Licensing:
+
+    This code is distributed under the GNU LGPL license.
+
+  Modified:
+
+    19 January 2012
+
+  Author:
+
+    John Burkardt
+
+  Reference:
+
+    Frederick Ruckdeschel,
+    BASIC Scientific Subroutines,
+    Volume II,
+    McGraw-Hill, 1980,
+    ISBN: 0-07-054202-3,
+    LC: QA76.95.R82.
+
+  Parameters:
+
+    Input, float X, the argument.
+
+    Input, int N, the number of steps to take.
+
+    Output, float FX, the natural logarithm of X.
+
+  Local Parameters:
+
+    Local, float A(1:25) = exp ( (1/2)^(1:25) );
+*/
+{
+    a= {1.64872127,
+        1.28402541,
+        1.13314845,
+        1.06449445,
+        1.03174340,
+        1.01574770,
+        1.00784309,
+        1.00391388,
+        1.00195503,
+        1.00097703};
+    k=int16(0);
+    poweroftwo=0.0;
+    w={0.0:10};// matrix 10 posições iniciadas em 0
+    
+    if (x <= 0.0)
+    {
+        return 0;
+    }
+    k = 0;
+    
+    while (M_E <= x)
+    {
+        k = k + 1;
+        x = x / M_E;
+    }
+    
+    while (x < 1.0)
+    {
+        k = k - 1;
+        x = x * M_E;
+    }
+        
+    i=0;
+    while(i < 10)
+    {
+        w[i] = 0.0;
+        if(a[i] < x)
+        {
+            w[i] = 1.0;
+            x = x / a[i];
+        }
+        i++;
+    }
+
+    x -= 1.0;
+
+    x = x * (1.0 - (x / 2.0) * (1.0 + (x / 3.0) * (1.0 - x / 4.0)));
+
+    poweroftwo = 0.5;
+    i=0;
+    while (i < 10)
+    {
+        x = x + w[i] * poweroftwo;
+        poweroftwo = poweroftwo / 2.0;
+        i++;
+    }
+    return x + float(k);
+}
