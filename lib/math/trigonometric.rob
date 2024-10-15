@@ -111,9 +111,8 @@ float Cos(float alpha,int8 n){
   if(n>47){
       n=47;
   }
-
-  //alpha sai menor que 360°
-  while(alpha>360){ 
+  //alpha sai menor que 180°
+  while(alpha>2*FM_PI){ 
       alpha-=2*FM_PI;
     }
   
@@ -124,7 +123,7 @@ float Cos(float alpha,int8 n){
     if(alpha>FM_PI_2){
       alpha=FM_PI-alpha;
       invert=true;
-  }
+    }
   }else{
       // maior que 270°
       if(alpha>FM_PI+FM_PI_2){
@@ -135,10 +134,14 @@ float Cos(float alpha,int8 n){
   }
   }
   if(alpha==0.0){
-  return 1.0;
+    if(invert){
+      return -1.0;
+    }else{
+      return 1.0;
+    }
   }
   if(alpha==FM_PI_2){
-  return 0.0;
+    return 0.0;
   }
   // ------------------------
   // |                      |
