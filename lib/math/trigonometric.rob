@@ -2,32 +2,34 @@
  * Part of the Robotics Language Standard Library, under the
  * Apache License v2.0.
  */
- use math.consts;
+ use math.fconsts;
+ use math.float;
 
  //table size 100 
 // add 'D' no final de cada número
+const K_n =0.607252935008881;
 
 theta_table ={
-  0.7853981633974483D,     0.4636476090008061D,     0.24497866312686414D,
-  0.12435499454676144D,    0.06241880999595735D,    0.031239833430268277D,
-  0.015623728620476831D,   0.007812341060101111D,   0.0039062301319669718D,
-  0.0019531225164788188D,  0.0009765621895593195D,  0.0004882812111948983D,
-  0.00024414062014936177D, 0.00012207031189367021D, 6.103515617420877e-05D,
-  3.0517578115526096e-05D, 1.5258789061315762e-05D, 7.62939453110197e-06D,
-  3.814697265606496e-06D,  1.907348632810187e-06D,  9.536743164059608e-07D,
-  4.7683715820308884e-07D, 2.3841857910155797e-07D, 1.1920928955078068e-07D,
-  5.960464477539055e-08D,  2.9802322387695303e-08D, 1.4901161193847655e-08D,
-  7.450580596923828e-09D,  3.725290298461914e-09D,  1.862645149230957e-09D,
-  9.313225746154785e-10D,  4.656612873077393e-10D,  2.3283064365386963e-10D,
-  1.1641532182693481e-10D, 5.820766091346741e-11D,  2.9103830456733704e-11D,
-  1.4551915228366852e-11D, 7.275957614183426e-12D,  3.637978807091713e-12D,
-  1.8189894035458565e-12D, 9.094947017729282e-13D,  4.547473508864641e-13D,
-  2.2737367544323206e-13D, 1.1368683772161603e-13D, 5.684341886080802e-14D,
-  2.842170943040401e-14D,  1.4210854715202004e-14D, 7.105427357601002e-15D
+  0.7853981633974483,     0.4636476090008061,     0.24497866312686414,
+  0.12435499454676144,    0.06241880999595735,    0.031239833430268277,
+  0.015623728620476831,   0.007812341060101111,   0.0039062301319669718,
+  0.0019531225164788188,  0.0009765621895593195,  0.0004882812111948983,
+  0.00024414062014936177, 0.00012207031189367021, 6.103515617420877e-05,
+  3.0517578115526096e-05, 1.5258789061315762e-05, 7.62939453110197e-06,
+  3.814697265606496e-06,  1.907348632810187e-06,  9.536743164059608e-07,
+  4.7683715820308884e-07, 2.3841857910155797e-07, 1.1920928955078068e-07,
+  5.960464477539055e-08,  2.9802322387695303e-08, 1.4901161193847655e-08,
+  7.450580596923828e-09,  3.725290298461914e-09,  1.862645149230957e-09,
+  9.313225746154785e-10,  4.656612873077393e-10,  2.3283064365386963e-10,
+  1.1641532182693481e-10, 5.820766091346741e-11,  2.9103830456733704e-11,
+  1.4551915228366852e-11, 7.275957614183426e-12,  3.637978807091713e-12,
+  1.8189894035458565e-12, 9.094947017729282e-13,  4.547473508864641e-13,
+  2.2737367544323206e-13, 1.1368683772161603e-13, 5.684341886080802e-14,
+  2.842170943040401e-14,  1.4210854715202004e-14, 7.105427357601002e-15
 };
 
 // sine of alpha
-double Sin(double alpha,int16 n){
+float Sin(float alpha,int8 n){
     if(n<12){
         n=12;
     }
@@ -36,45 +38,49 @@ double Sin(double alpha,int16 n){
     }
    
   //alpha sai menor que 360°
-  while(alpha>=2*M_PI){
-    alpha-=2*M_PI;
+  while(alpha>=2*FM_PI){
+    alpha-=2*FM_PI;
   }
   
   invert=false;
   //maior que 180°
-  if(alpha>=M_PI){
-      alpha-=M_PI;
+  if(alpha>=FM_PI){
+      alpha-=FM_PI;
       // maior que 270°
-      if(alpha>M_PI_2){
-        alpha=M_PI-alpha;
+      if(alpha>FM_PI_2){
+        alpha=FM_PI-alpha;
       }
       alpha*=-1;
   //menor que 180°
   }else{
     //maior que 90°
-    if(alpha>M_PI_2){
-      alpha=M_PI-alpha;
+    if(alpha>FM_PI_2){
+      alpha=FM_PI-alpha;
     }
   }
+  if(alpha==0.0){
+    return 0.0;
+   }
+   if(alpha==FM_PI_2){
+    return 1.0;
+   }
    // ------------------------
    // |                      |
    // |      CORDIC SIN      |
    // |                      |
    // ------------------------
    
-   K_n =0.607252935008881D;
    
-   sigma=1;
-   aux=0.0D;
-   auy=0.0D;
+   sigma=int8(1);
+   aux=float(0.0);
+   auy=float(0.0);
    
-   theta=0.0D;
-   x = 1.0D;
-   y = 0.0D;
-   P2i = 1.0D;  // This will be 2**(-i) in the loop below
-   P2i=1;
+   theta=float(0.0);
+   x = float(1.0);
+   y = float(0.0);
+   P2i = float(1.0);  // This will be 2**(-i) in the loop below
    j=int16(0);
-   t=1.0D;
+   t=float(1.0);
   //  t=0.0;
    while(j<n){
      if( theta < alpha){
@@ -98,94 +104,156 @@ double Sin(double alpha,int16 n){
 }
 
 // cosine of alpha
-double Cos(double alpha,int16 n){
-    if(n<12){
-        n=12;
+float Cos(float alpha,int8 n){
+  if(n<12){
+      n=12;
+  }
+  if(n>47){
+      n=47;
+  }
+
+  //alpha sai menor que 360°
+  while(alpha>360){ 
+      alpha-=2*FM_PI;
     }
-    if(n>47){
-        n=47;
-    }
-    
-    //alpha sai menor que 360°
-    while(alpha>360){ 
-       alpha-=2*M_PI;
-     }
-    
-    invert=false;
-    // menor que 180°
-    if(alpha<M_PI){
-      // maior que 90°
-      if(alpha>M_PI_2){
-       alpha=M_PI-alpha;
-       invert=true;
-    }
-   }else{
-        // maior que 270°
-        if(alpha>M_PI+M_PI_2){
-            alpha=2*M_PI-alpha;
-        }else{
-            alpha-=M_PI;
-            invert=true;
-   }
-   }
-    // ------------------------
-    // |                      |
-    // |      CORDIC COS      |
-    // |                      |
-    // ------------------------
-    
-    K_n =0.607252935008881D;
-   
-    sigma=1;
-    aux=0.0D;
-    auy=0.0D;
-    
-    theta=0.0D;
-    x = 1.0D;
-    y = 0.0D;
-    P2i = 1.0D;  // This will be 2**(-i) in the loop below
-    P2i=1;
-    j=int16(0);
-    t=1.0D;
-   //  t=0.0;
-    while(j<n){
-      if( theta < alpha){
-          sigma = 1; 
-        }else{
-         sigma=-1;
-       } //define o sentido de rotação do vetor
-       t=theta_table[j];
-       theta += sigma * t;
-       aux = x - sigma * y * P2i;
-       auy = sigma * P2i * x + y;
-       x=aux;
-       y=auy;
-       P2i/= 2;
-       j++;
-    }
-    if(invert){
-        x*=-1;
-       }
-    return x * K_n;
-}
+  
+  invert=false;
+  // menor que 180°
+  if(alpha<FM_PI){
+    // maior que 90°
+    if(alpha>FM_PI_2){
+      alpha=FM_PI-alpha;
+      invert=true;
+  }
+  }else{
+      // maior que 270°
+      if(alpha>FM_PI+FM_PI_2){
+          alpha=2*FM_PI-alpha;
+      }else{
+          alpha-=FM_PI;
+          invert=true;
+  }
+  }
+  if(alpha==0.0){
+  return 1.0;
+  }
+  if(alpha==FM_PI_2){
+  return 0.0;
+  }
+  // ------------------------
+  // |                      |
+  // |      CORDIC COS      |
+  // |                      |
+  // ------------------------
+  
+  
+  sigma=int8(1);
+  aux=float(0.0);
+  auy=float(0.0);
+  
+  theta=float(0.0);
+  x = float(1.0);
+  y = float(0.0);
+  P2i = float(1.0);  // This will be 2**(-i) in the loop below
+  j=int16(0);
+  t=float(1.0);
+  //  t=0.0;
+  while(j<n){
+    if( theta < alpha){
+        sigma = 1; 
+      }else{
+        sigma=-1;
+      } //define o sentido de rotação do vetor
+      t=theta_table[j];
+      theta += sigma * t;
+      aux = x - sigma * y * P2i;
+      auy = sigma * P2i * x + y;
+      x=aux;
+      y=auy;
+      P2i/= 2;
+      j++;
+  }
+  if(invert){
+      x*=-1;
+      }
+  return x * K_n;
+ }
 
 // Tangent of alpha
-double Tan(double alpha,int16 n){
-    return Sin(alpha,n)/Cos(alpha,n);
+float Tan(float alpha,int8 n){
+  if(n<12){
+      n=12;
+  }
+  if(n>47){
+      n=47;
+  }
+   
+  //alpha sai menor que 180°
+  while(alpha>FM_PI){
+    alpha-=FM_PI;
+  }
+  
+  invert=false;
+  //se alpha==90°
+  if(alpha==FM_PI_2){
+    return NAN;
+  }
+  // se alpha > 90
+  if(alpha>FM_PI_2){
+    alpha=FM_PI-alpha;
+    invert=true;
+  }
+
+  // ------------------------
+  // |                      |
+  // |      CORDIC TAN      |
+  // |                      |
+  // ------------------------
+  
+  sigma=int8(1);
+  aux=float(0.0);
+  auy=float(0.0);
+  
+  theta=float(0.0);
+  x = float(1.0);
+  y = float(0.0);
+  P2i = float(1.0);  // This will be 2**(-i) in the loop below
+  j=int8(0);
+  t=float(1.0);
+  //  t=0.0;
+  while(j<n){
+    if( theta < alpha){
+        sigma = 1; 
+      }else{
+      sigma=-1;
+    } //define o sentido de rotação do vetor
+    t=theta_table[j];
+    theta += sigma * t;
+    aux = x - sigma * y * P2i;
+    auy = sigma * P2i * x + y;
+    x=aux;
+    y=auy;
+    P2i/= 2;
+    j++;
+  }
+  if(invert){
+      x*=-1.0;
+    }
+  return y/x ;
 }
 
 // coTangent of alpha
-double coTan(double alpha,int16 n){
+float coTan(float alpha,int8 n){
     return Cos(alpha,n)/Sin(alpha,n);
 }
 
 // Secant of alpha.
-double Sec(double alpha,int16 n){
+float Sec(float alpha,int8 n){
     return 1/Cos(alpha,n);
 }
 
 // coSecant of alpha.
-double coSec(double alpha,int16 n){
+float coSec(float alpha,int8 n){
     return 1/Sin(alpha,n);
 }
 
