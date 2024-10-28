@@ -1,81 +1,59 @@
 
 use math.fconsts;
+use math.float;
+
 
 float ln(float x)
-/******************************************************************************/
-/*
-  Purpose:
 
-    LN_CORDIC evaluates the natural logarithm using the CORDIC method.
-
-  Licensing:
-
-    This code is distributed under the GNU LGPL license.
-
-  Modified:
-
-    19 January 2012
-
-  Author:
-
-    John Burkardt
-
-  Reference:
-
-    Frederick Ruckdeschel,
-    BASIC Scientific Subroutines,
-    Volume II,
-    McGraw-Hill, 1980,
-    ISBN: 0-07-054202-3,
-    LC: QA76.95.R82.
-
-  Parameters:
-
-    Input, float X, the argument.
-
-    Input, int N, the number of steps to take.
-
-    Output, float FX, the natural logarithm of X.
-
-  Local Parameters:
-
-    Local, float A(1:25) = exp ( (1/2)^(1:25) );
-*/
 {
-    a= {1.64872127,
-        1.28402541,
-        1.13314845,
-        1.06449445,
-        1.03174340,
-        1.01574770,
-        1.00784309,
-        1.00391388,
-        1.00195503,
-        1.00097703};
-    k=int16(0);
-    poweroftwo=0.0;
-    w={0.0:10};// matrix 10 posições iniciadas em 0
+    a= { 1.648721270700128, 
+      1.284025416687742, 
+      1.133148453066826, 
+      1.064494458917859, 
+      1.031743407499103, 
+      1.015747708586686, 
+      1.007843097206488, 
+      1.003913889338348, 
+      1.001955033591003, 
+      1.000977039492417, 
+      1.000488400478694, 
+      1.000244170429748, 
+      1.000122077763384, 
+      1.000061037018933, 
+      1.000030518043791, 
+      1.0000152589054785, 
+      1.0000076294236351, 
+      1.0000038147045416, 
+      1.0000019073504518, 
+      1.0000009536747712, 
+      1.0000004768372719, 
+      1.0000002384186075, 
+      1.0000001192092967,
+      1.0000000596046466, 
+      1.0000000298023228
+    };
+    k=int16(1);
+    poweroftwo=float(0.0);
+    w={0.0:20};// matrix 10 posições iniciadas em 0
     
     if (x <= 0.0)
     {
-        return 0;
-    }
-    k = 0;
-    
-    while (M_E <= x)
+        return INFINITY;
+    } 
+    while (FM_E <= x)
     {
         k = k + 1;
-        x = x / M_E;
+        x = x / FM_E;
     }
     
     while (x < 1.0)
     {
         k = k - 1;
-        x = x * M_E;
+        x = x * FM_E;
     }
-        
-    i=0;
-    while(i < 10)
+     
+    i=int16(0);
+    while(i < 7)
     {
         w[i] = 0.0;
         if(a[i] < x)
@@ -92,7 +70,7 @@ float ln(float x)
 
     poweroftwo = 0.5;
     i=0;
-    while (i < 10)
+    while (i < 8)
     {
         x = x + w[i] * poweroftwo;
         poweroftwo = poweroftwo / 2.0;
