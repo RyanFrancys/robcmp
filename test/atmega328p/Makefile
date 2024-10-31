@@ -1,6 +1,7 @@
 ALL=$(patsubst %.rob,out/%,$(wildcard *.rob))
 ALL_LL=$(patsubst %.rob,out/%.ll,$(wildcard *.rob))
 ALL_TT=$(patsubst %.rob,%.tt,$(wildcard *.rob))
+ALL_TIME=$(patsubst %.rob,%.time,$(wildcard *.rob))
 ALL_OO=$(patsubst %.rob,out/%.o,$(wildcard *.rob)) out/atmega328p.o
 
 ROBCMP=../../build/robcmp
@@ -20,6 +21,8 @@ DEPENDS=${ROBCMP} Makefile
 LINK_DEPENDS=out/atmega328p.o
 
 all: out test
+
+time: out time
 
 out:
 	mkdir -p out
@@ -48,6 +51,8 @@ out/% : out/%.o ${LINK_DEPENDS}
 	ld.lld-19 ${LD_FLAGS} $^ -o $@
 
 test: ${ALL_TT}
+
+time: ${ALL_TIME}
 
 clean:
 	@rm -f ${ALL} ${ALL_LL} ${ALL_OO}
