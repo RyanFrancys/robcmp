@@ -42,7 +42,7 @@ out/%.ll : %.rob ${DEPENDS}
 	@-./runtest.sh $< $(patsubst %.rob,out/%,$<) 
 
 %.up : %.tt ${DEPENDS}
-	${TOOL_OPEN_OCD_FOLDER}/bin/openocd -f ${TOOL_OPEN_OCD_FOLDER}/scripts/interface/stlink.cfg -f ${TOOL_OPEN_OCD_FOLDER}/scripts/target/stm32f1x.cfg -c "program $(patsubst %.tt,out/%,$<) reset exit"
+	sudo	${TOOL_OPEN_OCD_FOLDER}/bin/openocd -f ${TOOL_OPEN_OCD_FOLDER}/scripts/interface/stlink.cfg -f ${TOOL_OPEN_OCD_FOLDER}/scripts/target/stm32f1x.cfg -c "program $(patsubst %.tt,out/%,$<) reset exit"
 
 out/% : out/%.o ${LINK_DEPENDS} 
 	ld.lld ${LD_FLAGS} $^ -o $@
