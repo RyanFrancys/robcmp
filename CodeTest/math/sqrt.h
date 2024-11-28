@@ -1,0 +1,67 @@
+#ifndef SQRT_H
+#define SQRT_H
+
+float Sqrt(float x)
+/******************************************************************************/
+/*
+ https://github.com/lavrovd/jburkardt-c/blob/afff376e712b07088c09e729e8965cfe8d056eea/cordic/cordic.c#L2316
+ Purpose:
+   SQRT_CORDIC returns the square root of a value using the CORDIC method.
+
+ Licensing:
+   This code is distributed under the GNU LGPL license.
+
+ Modified:
+   19 January 2012
+
+ Author:
+   John Burkardt
+
+ Parameters:
+   Input, float X, the number whose square root is desired.
+
+   Input, int precision, the number of iterations to take.
+   This is essentially the number of binary digits of accuracy, and
+   might go as high as 53.
+
+   Output, float SQRT_CORDIC, the approximate square root of X.
+*/
+{
+  float poweroftwo = 0.0;
+  float y = 0.0;
+
+  if (x == 0.0 || x == 1.0)
+  {
+    return x;
+  }
+  poweroftwo = 1.0;
+  if (x < 1.0)
+  {
+    while (x <= poweroftwo * poweroftwo)
+    {
+      poweroftwo = poweroftwo / 2.0;
+    }
+    y = poweroftwo;
+  }
+  else if (1.0 < x)
+  {
+    while (poweroftwo * poweroftwo <= x)
+    {
+      poweroftwo = 2.0 * poweroftwo;
+    }
+    y = poweroftwo / 2.0;
+  }
+  int i = 1;
+  while (i <= 22)
+  {
+    poweroftwo = poweroftwo / 2.0;
+    if ((y + poweroftwo) * (y + poweroftwo) <= x)
+    {
+      y = y + poweroftwo;
+    }
+    i++;
+  }
+  return y;
+}
+
+#endif

@@ -1,0 +1,27 @@
+#include <string.h>
+
+void return_and_sleep(int  result) {
+    volatile int a=result;
+    // As part of the AVR GCC calling convention,
+    // result argument (first arg) is passed in r24 and r25
+    // disable interruptions and sleep; this is used to quit simavr in our tests
+    asm("cli");//desabilita todos os tipos de interrupções
+    asm("sleep");// dorme
+}
+
+int main() {
+    const char *str1 = "ඣ𮱮䡌얊䎻霂↎𝆁򘋟쌆ҕ􈙲񁆺葒񆉠l힦]ks酪ڴѹr򂨰񝡵쉽T󎬹A򯕙􍰴橖вǬ񩁅􀊻ꚧﲎ̰ى鉡л㧌􂐓챿⻧􅕍ࣶʶ#;姱䗗֠緿/HƤ掶?𜩨򮹯򙢜ʉwKv鰪ƶw赟ʼÌّF󴵇䅧{󣦵뭭㶚Cʦߩ𷊺zAۿ@ޜˊ2蛽⃆ߠ򈧱뉳ʃ2*󚾊%]Tݍ񴒠쯦𑙀㬮襘پ󔑦Ȁ𶍧K󶤬Q蟂뤵𒂎񓶞RϨ(.릹EXϦȋ蛩뫵䥸蜑Xz$񗊶P􇊦۾೷Gىᙄ򅖩貘暾ٙ󀠋饣өƑ𤫷򸿢󬓣ٽ󕀤Ղ_Ş󤳨ƭͲ􊌵UꈂΑLἲ~蔵鏀c嚦s묫ӹ7㿲Гͩ⠦糺ťͽ񱆘ꂛ𠕣򞍥󲱊/HƤ掶?𜩨򮹯򙢜ʉwKv鰪ƶw赟ʼÌّF󴵇䅧{󣦵뭭㶚Cʦߩ𷊺zAۿ@ޜˊ2蛽⃆ߠ򈧱뉳ʃ2*󚾊%]Tݍ񴒠쯦𑙀㬮襘پ󔑦Ȁ𶍧K󶤬Q蟂뤵𒂎񓶞RϨ(.릹EXϦȋ蛩뫵䥸蜑Xz$񗊶P􇊦۾೷Gىᙄ򅖩貘暾ٙ󀠋饣өƑ𤫷򸿢󬓣ٽ󕀤Ղ_Ş󤳨ƭͲ􊌵UꈂΑLἲ~蔵鏀c嚦s묫ӹ7㿲Гͩ⠦糺ťͽ񱆘ꂛ𠕣򞍥󲱊/HƤ掶?𜩨򮹯򙢜ʉwKv鰪ƶs묫ӹ7㿲Гͩ⠦糺ťͽ񱆘ꂛ𠕣򞍥󲱊/HƤ掶?𜩨򮹯򙢜ʉwKv鰪ƶs묫ӹ7㿲Гͩ⠦糺ťͽ񱆘ꂛ𠕣򞍥󲱊/HƤ掶?𜩨򮹯";
+
+    const char *str2 = "ඣ𮱮䡌얊䎻霂↎𝆁򘋟쌆ҕ􈙲񁆺葒񆉠l힦]ks酪ڴѹr򂨰񝡵쉽T󎬹A򯕙􍰴橖вǬ񩁅􀊻ꚧﲎ̰ى鉡л㧌􂐓챿⻧􅕍ࣶʶ#;姱䗗֠緿/HƤ掶?𜩨򮹯򙢜ʉwKv鰪ƶw赟ʼÌّF󴵇䅧{󣦵뭭㶚Cʦߩ𷊺zAۿ@ޜˊ2蛽⃆ߠ򈧱뉳ʃ2*󚾊%]Tݍ񴒠쯦𑙀㬮襘پ󔑦Ȁ𶍧K󶤬Q蟂뤵𒂎񓶞RϨ(.릹EXϦȋ蛩뫵䥸蜑Xz$񗊶P􇊦۾೷Gىᙄ򅖩貘暾ٙ󀠋饣өƑ𤫷򸿢󬓣ٽ󕀤Ղ_Ş󤳨ƭͲ􊌵UꈂΑLἲ~蔵鏀c嚦s묫ӹ7㿲Гͩ⠦糺ťͽ񱆘ꂛ𠕣򞍥󲱊/HƤ掶?𜩨򮹯򙢜ʉwKv鰪ƶw赟ʼÌّF󴵇䅧{󣦵뭭㶚Cʦߩ𷊺zAۿ@ޜˊ2蛽⃆ߠ򈧱뉳ʃ2*󚾊%]Tݍ񴒠쯦𑙀㬮襘پ󔑦Ȁ𶍧K󶤬Q蟂뤵𒂎񓶞RϨ(.릹EXϦȋ蛩뫵䥸蜑Xz$񗊶P􇊦۾೷Gىᙄ򅖩貘暾ٙ󀠋饣өƑ𤫷򸿢󬓣ٽ󕀤Ղ_Ş󤳨ƭͲ􊌵UꈂΑLἲ~蔵鏀c嚦s묫ӹ7㿲Гͩ⠦糺ťͽ񱆘ꂛ𠕣򞍥󲱊/HƤ掶?𜩨򮹯򙢜ʉwKv鰪ƶs묫ӹ7㿲Гͩ⠦糺ťͽ񱆘ꂛ𠕣򞍥󲱊/HƤ掶?𜩨򮹯򙢜ʉwKv鰪ƶs묫ӹ7㿲Гͩ⠦糺ťͽ񱆘ꂛ𠕣򞍥󲱊/HƤ掶?𜩨򮹯";
+
+    const char *str4 = "𴙗Ȉ􉏺ݤ歠ω9୆碻ノ쿵E΃f񟸠&𗌐Ҁϓ򀙷睆i๒ۯ荬ե}萒㽁ȐƤ 𚟙𷓂񂅘㯩펑Ƹ确ʺ󩰭ݍ𧗐ٷꑩ6Х줎Q͙󎕭龜𙛿ٹꑙ X𫄕@u񐑧蔥ⰬF鐸痳ݠچ&{𳕷j惛򐴇cPǀΌޮQ𷼦𷼦󸯃,vǁˆ𢨿􅵈᷐崎?]xŃ朇⻕%WļͬlƸЯ򾨝Aֶ轟촆󥆵偲󝓇А󸤍m䙡7񵶛󡶓򘑧仐񯺝RP𐊆s٠~j炃ٴ񦷕򎶩դm󸳲招ǈق䓩󑮤W⍛񇹆朚쿃렼υȧ՚⠑ᄒf}뢮𳜞򃀷씊Rꅻ޻̘鵢ϳ̓�`󉝰񵱹󨏰۝m󂶍x󆍈ٿ6ЁⒻْƧ`š䃭TOs:P󎨜򷳍ު㌁솃亍ﯯ)ᷰǀĒȃЍ֎𖼚󡋁3L򭣰ߪ듻ݯ9f򰳫󳾾Ƞ!柎򿥊󐱮Y㒇𾙌ѷ͌ݬݦ˒Ϣ㾔㠆䙡ρ깪ꖘ9򃔺论癛uӖ켬e۶ذ򮪬Vꥰ􏣠O중옝㌬㦥𓫑򶭟-񹋭ᰶψ4s䑎󀿚􋥶Ӳ_758쉓ܵʁ缂;âs輌毑{鷛 ӵ񒧴񝹾틢sև󂴫X񈙔ӓʾ<奠묷å򅛬ꥪݹإݾv҉⪐敢gʃ򣻳éx釻񹓚򷧶ӆ򧩸늿ᶃ򵔹˭ԑ勇Ǹܮ𻜯񞄴6ױ琧򙺓bŉ❪#q邔ನ霞ᤡ͆V􇅑ٺ񞡪𘃘򸆌z񒼋󕌙ʿ𭖎򗜽􍩒դ۱h𚠫*󂺆襗oײQ9ݓ퐅𝒪𷨺𹸷3ɹ񶌎֚߯ȍ񽫺𡉥7}󑞉ρ菱񹓚󿌶𜖷o̸򷧶ӆh󡹶􊲓맢0";
+
+    int result1 = strcmp(str1, str2);
+    int result2 = strcmp(str1, str4);
+
+    if (result1 == 0 && result2 != 0) {
+        return_and_sleep(0);
+    } else {
+        return_and_sleep(1);
+    }
+}
