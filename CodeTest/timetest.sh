@@ -8,6 +8,7 @@ NC="\033[0m"
 echo -n "               $1 "
 timer=0
 REP=10
+$CMD
 STATUS=$?
 if [ "${STATUS}" -eq 0 ]; then
 	TIMEFORMAT="%U" # get only the User time
