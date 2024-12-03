@@ -53,8 +53,8 @@ void return_and_sleep(int  result) {
     // As part of the AVR GCC calling convention,
     // result argument (first arg) is passed in r24 and r25
     // disable interruptions and sleep; this is used to quit simavr in our tests
-    // asm("cli");
-    // asm("sleep");
+    asm("cli");
+    asm("sleep");
 }
 
 int main()
