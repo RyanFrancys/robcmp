@@ -1,0 +1,9 @@
+const a = 1E-2;
+
+int16 main(){
+    b=a;
+    if( b!=0.01){
+        return 1;
+    }
+    return 0;
+}
