@@ -2,7 +2,6 @@
 use math.exp;
 use math.abs;
 
-const casas_decimais=1E3;
 values={
     0.135335,
     0.136695,0.138069,0.139457,0.140858,0.142274,0.143704,0.145148,0.146607,0.148080,0.149569,
@@ -47,17 +46,22 @@ values={
     6.753067,6.820937,6.889489,6.958729,7.028665,7.099305,7.170654,7.242720,7.315510,7.389032    
     };
     
-    
-int16 main() {
-    i = float(-2.0);
-    pos=int32(0);
-    value=int32(0);
-    result=int32(0);
-    while(i <= 2.0) {
-        result = int32(Exp(i)*casas_decimais);
-        value=int32(values[pos]*casas_decimais);
-        if (abs32(result-value)>10) {
-                if(i!=0){
+    // const casas_decimais=1E-2;//não funciona aparentemente
+
+    const casas_decimais=0.01;//Equal 1E-2
+
+    const entries = values.size;
+    int16 main() {
+        casa=float(casas_decimais);
+        i = float(-2.0);
+        pos=int32(0);
+        value=float(0.0);
+        result=float(0.0);
+        while(pos< entries) {
+            result = Exp(i);
+            value = values[pos];
+            if (fabs(result-value)>casas_decimais) {
+                if(pos!=0){
                     return int16(pos);
                 }else{
                     return -1;

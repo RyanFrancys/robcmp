@@ -139,7 +139,7 @@ float Cos(float alpha,int8 n){
       return 1.0;
     }
   }
-  if(alpha==FM_PI_2){
+  if(alpha-FM_PI_2==0.0){
     return 0.0;
   }
   // ------------------------

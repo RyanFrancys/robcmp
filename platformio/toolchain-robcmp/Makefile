@@ -1,14 +1,14 @@
-LLVM_OBJCOPY=$(shell which llvm-objcopy-18)
+LLVM_OBJCOPY=$(shell which llvm-objcopy-19)
 ifeq ($(LLVM_OBJCOPY),)
 	LLVM_OBJCOPY=$(shell which llvm-objcopy)
 endif
 
-LLVM_LD=$(shell which ld.lld-18)
+LLVM_LD=$(shell which ld.lld-19)
 ifeq ($(LLVM_LD),)
 	LLVM_LD=$(shell which ld.lld)
 endif
 
-LLVM_SIZE=$(shell which llvm-size-18)
+LLVM_SIZE=$(shell which llvm-size-19)
 ifeq ($(LLVM_SIZE),)
 	LLVM_SIZE=$(shell which llvm-size)
 endif
@@ -79,8 +79,8 @@ package.json: package-orig.json
 ../toolchain-robcmp-${suffix}-${version}.tar.gz: package.json
 	ln -sf $(TOOLS) bin
 	ln -sf $(LIBS) lib
-	if [ -f bin/ld.lld-18 ]; then cd bin && ln -s ld.lld-18 ld.lld; fi
-	if [ -f bin/llvm-objcopy-18 ]; then cd bin && ln -s llvm-objcopy-18 llvm-objcopy; fi
+	if [ -f bin/ld.lld-19 ]; then cd bin && ln -s ld.lld-19 ld.lld; fi
+	if [ -f bin/llvm-objcopy-19 ]; then cd bin && ln -s llvm-objcopy-19 llvm-objcopy; fi
 	tar chfz $@ $^ bin lib
 
 clean:

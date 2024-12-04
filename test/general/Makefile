@@ -35,8 +35,11 @@ out/%.ll : %.rob ${ROBCMP} Makefile
 	@[ -f $(patsubst %.rob,%.spec,$<) ] && cp $(patsubst %.rob,%.spec,$<) temp.spec || true
 	${ROBCMP} ${OPT} -I ../../lib -bdep -s temp.spec $< > $@
 
-%.tt : %.rob
+%.tt : %.rob clean
 	@-./runtest.sh $< $(patsubst %.rob,out/%,$<) 
+
+%.time : %.rob clean
+	@-./timetest.sh $< $(patsubst %.rob,out/%,$<) 
 
 % : %.o
 ifeq ($(OS), Msys)

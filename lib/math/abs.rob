@@ -28,3 +28,11 @@ int64 abs64(int64 value) inline {
     value = (value ^ mask) - mask;
     return value;
 }
+
+float fabs(float value) inline {
+    if (value>0){
+        return value;
+    }else {
+        return -value;
+        }
+}
