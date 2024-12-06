@@ -1,7 +1,6 @@
 CMD=./robcmp-simavr-debug -c 16000000 -m atmega328p -f 
-CC=avr-gcc
+CC=arm-nome-eabi-gcc
 ALL_TT=$(patsubst %.c,%.tt,$(wildcard *.c))
-ALL_TIME=$(patsubst %.c,%.time,$(wildcard *.c))
 
 
 all:out test
@@ -12,13 +11,6 @@ all:out test
 	$(CMD) out/$*
 
 test: ${ALL_TT}
-
-time: ${ALL_TIME}
-
-%.time : %.c
-	$(CC) -mmcu=atmega328p $(OPT) $< -o out/$*
-	@echo "\n"
-	@-./timetest.sh $< out/$*
 
 %.t : %.c
 	$(CC) -mmcu=atmega328p $(OPT) $< -o out/$*
