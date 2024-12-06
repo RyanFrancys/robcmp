@@ -35,15 +35,9 @@ all: ${ROBCMP} ${ALL}
 
 %.elf : %.o
 	@#${CC} -v ${CCPLAT} ${AVRLIB} $< -o $@
-<<<<<<< Updated upstream
 	@#avr-gcc -v -mmcu=atmega328p $< -o $@
 	#avr-ld -o $@ -Tdata=0x800100 $<
 	ld.lld -o $@ -Tdata=0x800100 $<
-
-=======
-	@avr-gcc -v -mmcu=atmega328p $< -o $@
-	# avr-ld -o $@ -Tdata=0x800100 $<
->>>>>>> Stashed changes
 
 %.hex : %.elf
 	#avr-objcopy -Oihex $< $@

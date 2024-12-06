@@ -16,11 +16,15 @@ test: ${ALL_TT}
 	@echo "\n"
 	@-./timetest.sh $< out/$*
 
+%.t : %.c
+	$(CC) -mmcu=atmega328p $(OPT) $< -o out/$*
+	$(CMD) out/$* -g
+
 out: 
-	mkdir -p out
+	@mkdir -p out
 
 size:
-	avr-size out/*
+	@avr-size out/*
 
 clean:
 	@rm out/*

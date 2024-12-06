@@ -1,6 +1,4 @@
 #include <stdlib.h>
-#include "./math/fconsts.h"
-#include "./math/ln.h"
 #include <math.h>
 
 float values[]={
@@ -65,7 +63,7 @@ int main()
     #define casas_decimais 0.000001//Equal 1E-6
     while (pos < entries)
     {
-        float aux = Ln(i);
+        float aux = log(i);
         float valor = values[pos];
         if (fabs(aux - valor) > casas_decimais)
         {

@@ -1,0 +1,42 @@
+
+use intfs.ports;
+use arch.stm32.stm32f1;
+use convert.itoa;
+
+int16 run_test(stm32f1 mmcu) {
+    //code to test the time
+	return 0;
+}
+
+int16 main() {
+    mmcu = stm32f1();
+    serial = mmcu.uart2;
+    serial.setup(9600);
+    serial.enable();
+
+    loop {
+        start = mmcu.millis();
+
+        ret = run_test(mmcu);
+
+        // millis is counting downwards, thus start - current
+        time = start - mmcu.millis();
+
+        timestr = {'0': 10};
+        chars = itoa(time, 10, timestr);
+
+        if ret != 0 {
+            serial.write_array("FAIL");
+        } else {
+            timestr[chars] = ' ';
+            timestr[chars+1] = 'm';
+            timestr[chars+2] = 's';
+            timestr[chars+3] = ' ';
+            serial.write_array(timestr);
+        }
+        serial.write('\r');
+        serial.write('\n');
+
+    }
+    return 0;
+}

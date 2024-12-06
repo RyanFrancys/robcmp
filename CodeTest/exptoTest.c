@@ -1,8 +1,6 @@
-#include "./math/exp.h"
 #include <math.h>
 #include <stdlib.h>
 
-// #define  casas_decimais 1E3
 float values[]={
 0.135335,
 0.136695,0.138069,0.139457,0.140858,0.142274,0.143704,0.145148,0.146607,0.148080,0.149569,
@@ -68,7 +66,7 @@ int main()
     {
         #define casas_decimais 0.01
 
-        float aux = Exp(i);
+        float aux = exp(i);
         float valor = values[pos];
         if (fabs(aux - valor) > casas_decimais)
         {

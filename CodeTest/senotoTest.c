@@ -1,6 +1,7 @@
 #include <stdlib.h>
-#include "./math/fconsts.h"
-#include "./math/trigonometric.h"
+#include <math.h>
+//#include "./math/fconsts.h"
+//#include "./math/trigonometric.h"
 
 // #define precision_digits 1E6
 
@@ -49,7 +50,7 @@ int main()
     #define casas_decimais 0.000001//Equal 1E-6
     while (pos < entries)
     {
-        aux = Sin((i * FM_PI) / 180.0, 22);
+        aux = sinf((i * M_PI) / 180.0);
         valor = values[pos];
         if (fabs(aux - valor) > casas_decimais)
         {

@@ -1,6 +1,6 @@
 // #include <avr/io.h>
 #include <math.h>
-#include "./math/sqrt.h"
+//#include "./math/sqrt.h"
 
 
 float values[]={
@@ -66,7 +66,7 @@ int main()
     while (pos < entries)
     {
 
-        float aux = Sqrt(i);
+        float aux = sqrt(i);
         float valor = values[pos];
         if (fabs(aux - valor) > casas_decimais)
         {

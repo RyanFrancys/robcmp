@@ -1,7 +1,5 @@
 #include <stdlib.h>
 #include <math.h>
-#include "./math/fconsts.h"
-#include "./math/trigonometric.h"
 
 float values[] = {
     1.000000, 0.999962,0.999848,0.999657,0.999391,0.999048,0.998630,0.998135,0.997564,0.996917,0.996195,0.995396,0.994522,0.993572,0.992546,0.991445,0.990268,0.989016,0.987688,0.986286,
@@ -48,7 +46,7 @@ int main()
     #define casas_decimais 0.000001//Equal 1E-6
     while (pos < entries)
     {
-        aux = Cos((i * FM_PI) / 180.0, 22);
+        aux = cosf((i * M_PI) / 180.0);
         valor = values[pos];
         if (fabs(aux - valor) > casas_decimais)
         {
