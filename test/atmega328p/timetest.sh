@@ -1,5 +1,5 @@
 #!/bin/bash
-CMD="./robcmp-simavr-debug -c 16000000 -m atmega284p -f $2"
+CMD="./robcmp-simavr-debug -c 16000000 -m atmega328p -f $2"
 
 GREEN="\033[0;32m"
 RED="\033[0;31m"
