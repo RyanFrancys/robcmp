@@ -52,7 +52,6 @@ values={
 
     const entries = values.size;
     int16 main() {
-        casa=float(casas_decimais);
         i = float(-2.0);
         pos=int32(0);
         value=float(0.0);
